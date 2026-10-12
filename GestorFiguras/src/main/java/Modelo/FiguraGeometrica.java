@@ -8,6 +8,11 @@ package Modelo;
  *
  * @author 57323
  */
-public class FiguraGeometrica {
-    
+
+public abstract class FiguraGeometrica {
+
+    public abstract double calcularArea();
+
+    public abstract void mover(double desplazamientoX,
+                               double desplazamientoY);
 }
