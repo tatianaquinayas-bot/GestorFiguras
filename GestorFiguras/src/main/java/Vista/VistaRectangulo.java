@@ -4,20 +4,57 @@
  */
 package Vista;
 
+import Controlador.ControladorRectangulo;
+import javax.swing.JOptionPane;
 /**
  *
  * @author 57323
  */
 public class VistaRectangulo extends javax.swing.JFrame {
     
+    private ControladorRectangulo controlador;
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VistaRectangulo.class.getName());
+
+    
+public void setControlador(ControladorRectangulo controlador) {
+    this.controlador = controlador;
+}
+
+// Verificar que exista un rectangulo
+private boolean verificarRectangulo() {
+
+    if (controlador == null || !controlador.existeRectangulo()) {
+
+        JOptionPane.showMessageDialog(this,
+                "Primero debes crear un rectangulo.");
+
+        return false;
+    }
+
+    return true;
+}
+
+// Actualizar las coordenadas en el JFrame
+private void actualizarCamposVertices() {
+
+    txtX1.setText("" + controlador.obtenerPunto1().getX());
+    txtY1.setText("" + controlador.obtenerPunto1().getY());
+
+    txtX2.setText("" + controlador.obtenerPunto2().getX());
+    txtY2.setText("" + controlador.obtenerPunto2().getY());
+}
 
     /**
      * Creates new form VistaRectangulo
      */
     public VistaRectangulo() {
         initComponents();
+        setTitle("Gestor de Figuras - Rectangulo");
+        setLocationRelativeTo(null);
+        jTextArea1.setEditable(false);
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -102,16 +139,22 @@ public class VistaRectangulo extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTextArea1);
 
         btnCrear.setText("Crear rectángulo");
+        btnCrear.addActionListener(this::btnCrearActionPerformed);
 
         btnArea.setText("Calcular área");
+        btnArea.addActionListener(this::btnAreaActionPerformed);
 
         btnPunto.setText("Verificar punto");
+        btnPunto.addActionListener(this::btnPuntoActionPerformed);
 
         btnMover.setText("Mover");
+        btnMover.addActionListener(this::btnMoverActionPerformed);
 
         btnEscalar.setText("Escalar");
+        btnEscalar.addActionListener(this::btnEscalarActionPerformed);
 
         btnMostrar.setText("Mostrar datos");
+        btnMostrar.addActionListener(this::btnMostrarActionPerformed);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -285,6 +328,176 @@ public class VistaRectangulo extends javax.swing.JFrame {
     private void txtPuntoXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPuntoXActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPuntoXActionPerformed
+
+    private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
+        
+if (controlador == null) {
+
+    JOptionPane.showMessageDialog(this,
+            "Ejecuta el proyecto desde la clase principal.");
+
+    return;
+}
+
+try {
+
+    double x1 = Double.parseDouble(txtX1.getText().trim());
+    double y1 = Double.parseDouble(txtY1.getText().trim());
+
+    double x2 = Double.parseDouble(txtX2.getText().trim());
+    double y2 = Double.parseDouble(txtY2.getText().trim());
+
+    boolean creado = controlador.crearRectangulo(
+            x1, y1, x2, y2);
+
+    if (creado) {
+
+        jTextArea1.setText(controlador.mostrarDatos());
+
+        JOptionPane.showMessageDialog(this,
+                "Rectangulo creado correctamente.");
+
+    } else {
+
+        JOptionPane.showMessageDialog(this,
+                "Los vertices deben tener X e Y diferentes.\n"
+                + "La base y altura deben ser mayores que cero.");
+    }
+
+} catch (NumberFormatException e) {
+
+    JOptionPane.showMessageDialog(this,
+            "Escribe numeros validos en X1, Y1, X2 y Y2.\n"
+            + "Para decimales utiliza punto, ejemplo: 2.5");
+}
+
+    }//GEN-LAST:event_btnCrearActionPerformed
+
+    private void btnAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAreaActionPerformed
+        
+if (!verificarRectangulo()) {
+    return;
+}
+
+JOptionPane.showMessageDialog(this,
+        "Area del rectangulo: " + controlador.calcularArea());
+
+jTextArea1.setText(controlador.mostrarDatos());
+
+    }//GEN-LAST:event_btnAreaActionPerformed
+
+    private void btnPuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPuntoActionPerformed
+        
+if (!verificarRectangulo()) {
+    return;
+}
+
+try {
+
+    double x = Double.parseDouble(
+            txtPuntoX.getText().trim());
+
+    double y = Double.parseDouble(
+            txtPuntoY.getText().trim());
+
+    boolean dentro = controlador.puntoDentro(x, y);
+
+    if (dentro) {
+
+        JOptionPane.showMessageDialog(this,
+                "El punto esta dentro del rectangulo "
+                + "o en su borde.");
+
+    } else {
+
+        JOptionPane.showMessageDialog(this,
+                "El punto esta fuera del rectangulo.");
+    }
+
+} catch (NumberFormatException e) {
+
+    JOptionPane.showMessageDialog(this,
+            "Escribe coordenadas validas para el punto.");
+}
+
+    }//GEN-LAST:event_btnPuntoActionPerformed
+
+    private void btnMoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoverActionPerformed
+        
+if (!verificarRectangulo()) {
+    return;
+}
+
+try {
+
+    double dx = Double.parseDouble(
+            txtMoverX.getText().trim());
+
+    double dy = Double.parseDouble(
+            txtMoverY.getText().trim());
+
+    controlador.moverRectangulo(dx, dy);
+
+    actualizarCamposVertices();
+
+    jTextArea1.setText(controlador.mostrarDatos());
+
+    JOptionPane.showMessageDialog(this,
+            "Rectangulo movido correctamente.");
+
+} catch (NumberFormatException e) {
+
+    JOptionPane.showMessageDialog(this,
+            "Escribe valores validos para "
+            + "desplazar el rectangulo.");
+}
+
+    }//GEN-LAST:event_btnMoverActionPerformed
+
+    private void btnEscalarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEscalarActionPerformed
+        
+if (!verificarRectangulo()) {
+    return;
+}
+
+try {
+
+    double factor = Double.parseDouble(
+            txtFactor.getText().trim());
+
+    boolean escalado =
+            controlador.escalarRectangulo(factor);
+
+    if (!escalado) {
+
+        JOptionPane.showMessageDialog(this,
+                "El factor de escala debe ser mayor que cero.");
+
+        return;
+    }
+
+    actualizarCamposVertices();
+
+    jTextArea1.setText(controlador.mostrarDatos());
+
+    JOptionPane.showMessageDialog(this,
+            "Rectangulo escalado correctamente.");
+
+} catch (NumberFormatException e) {
+
+    JOptionPane.showMessageDialog(this,
+            "Escribe un numero valido "
+            + "como factor de escala.");
+}
+
+    }//GEN-LAST:event_btnEscalarActionPerformed
+
+    private void btnMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarActionPerformed
+if (!verificarRectangulo()) {
+    return;
+}
+
+jTextArea1.setText(controlador.mostrarDatos());    }//GEN-LAST:event_btnMostrarActionPerformed
 
     /**
      * @param args the command line arguments

@@ -346,31 +346,49 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Crear rect&#xe1;ngulo"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCrearActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnArea">
           <Properties>
             <Property name="text" type="java.lang.String" value="Calcular &#xe1;rea"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAreaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnPunto">
           <Properties>
             <Property name="text" type="java.lang.String" value="Verificar punto"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPuntoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnMover">
           <Properties>
             <Property name="text" type="java.lang.String" value="Mover"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMoverActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnEscalar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Escalar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEscalarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnMostrar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Mostrar datos"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMostrarActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
